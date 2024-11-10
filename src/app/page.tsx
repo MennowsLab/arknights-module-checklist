@@ -108,7 +108,7 @@ export default function App() {
           </span>
         </div>
       </div>
-      <div className="flex flex-wrap w-full gap-4 mx-4 mb-4 bg-stone-900">
+      <div className="flex flex-wrap gap-4 mx-4 mb-4 bg-stone-900">
         <div onClick={() => setTodoFilter('to-do')} className={todoFilter === "to-do" ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>To Do</div>
         <div onClick={() => setTodoFilter('all')} className={todoFilter === "all" ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>All</div>
         <div className='border-r-2 border-r-blue-400'></div>
@@ -178,10 +178,10 @@ export default function App() {
                       </td>
                       <td className="px-6 py-4">
                         <div onClick={() => toggleTask(module.id, 'mission1Status')}>
-                          {module.mission1Status == 1 ? <CheckBoxIcon className="fill-gray-400"/> : <CheckBoxOutlineBlankIcon className="fill-gray-400"/>}
+                          {module.mission1Status == 1 ? <CheckBoxIcon className="text-gray-400"/> : <CheckBoxOutlineBlankIcon className="text-gray-400"/>}
                         </div>
                         <div onClick={() => toggleTask(module.id, 'mission2Status')}>
-                          {module.mission2Status == 1 ? <CheckBoxIcon className="fill-gray-400"/> : <CheckBoxOutlineBlankIcon className="fill-gray-400"/>}
+                          {module.mission2Status == 1 ? <CheckBoxIcon className="text-gray-400"/> : <CheckBoxOutlineBlankIcon className="text-gray-400"/>}
                         </div>
                       </td>
                     </tr>
