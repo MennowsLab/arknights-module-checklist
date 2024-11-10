@@ -1,101 +1,194 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import React, { useState, useEffect } from 'react';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import Button from '@mui/material/Button';
+import data from './Arknights Module Checklist.json';
+
+export default function App() {
+  const [moduleData, setModuleData] = useState(data);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("all");
+  const [todoFilter, setTodoFilter] = useState("to-do");
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('moduleData');
+
+    if (storedData) {
+      setModuleData(JSON.parse(storedData));
+    } else {
+      setModuleData(data);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (moduleData.length > 0) {
+      localStorage.setItem('moduleData', JSON.stringify(moduleData));
+    }
+  }, [moduleData]);
+
+  const toggleTask = (id: number, mission: string) => {
+    setModuleData(prevData =>
+      prevData.map(module =>
+        module.id === id
+          ? {
+            ...module,
+            [mission]: module[mission as keyof typeof module] === 1 ? 0 : 1
+          }
+          : module
+      )
+    );
+  };
+
+  const filteredData = () => {
+    let filtered = moduleData;
+
+    if (todoFilter === 'to-do') {
+      filtered = filtered.filter(item => item.mission1Status === 0 || item.mission2Status === 0);
+    }
+
+    if (categoryFilter === 'vanguard') {
+      filtered = filtered.filter(item => item.class === 'Vanguard');
+    } else if (categoryFilter === 'guard') {
+      filtered = filtered.filter(item => item.class === 'Guard');
+    } else if (categoryFilter === 'defender') {
+      filtered = filtered.filter(item => item.class === 'Defender');
+    } else if (categoryFilter === 'sniper') {
+      filtered = filtered.filter(item => item.class === 'Sniper');
+    } else if (categoryFilter === 'caster') {
+      filtered = filtered.filter(item => item.class === 'Caster');
+    } else if (categoryFilter === 'medic') {
+      filtered = filtered.filter(item => item.class === 'Medic');
+    } else if (categoryFilter === 'supporter') {
+      filtered = filtered.filter(item => item.class === 'Supporter');
+    } else if (categoryFilter === 'specialist') {
+      filtered = filtered.filter(item => item.class === 'Specialist');
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter(item => {
+        return (
+          item.operator.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
+    }
+
+    return filtered;
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+      <div className="mb-3 xl:w-96">
+        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+          <input
+            type="search"
+            className="relative mx-4 my-4 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+            placeholder="Search Operator Name"
+            aria-label="Search"
+            aria-describedby="button-addon2"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <span
+            className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
+            id="basic-addon2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="h-5 w-5">
+              <path
+                fillRule="evenodd"
+                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                clipRule="evenodd" />
+            </svg>
+          </span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+      <div className="flex flex-wrap w-full gap-4 mx-4 mb-4">
+        <div onClick={() => setTodoFilter('to-do')} className={todoFilter === "to-do" ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>To Do</div>
+        <div onClick={() => setTodoFilter('all')} className={todoFilter === "all" ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>All</div>
+        <div className='border-r-2 border-r-blue-400'></div>
+        <div onClick={() => setCategoryFilter('all')} className={categoryFilter === 'all' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>All</div>
+        <div onClick={() => setCategoryFilter('vanguard')} className={categoryFilter === 'vanguard' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Vanguard</div>
+        <div onClick={() => setCategoryFilter('guard')} className={categoryFilter === 'guard' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Guard</div>
+        <div onClick={() => setCategoryFilter('defender')} className={categoryFilter === 'defender' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Defender</div>
+        <div onClick={() => setCategoryFilter('sniper')} className={categoryFilter === 'sniper' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Sniper</div>
+        <div onClick={() => setCategoryFilter('caster')} className={categoryFilter === 'caster' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Caster</div>
+        <div onClick={() => setCategoryFilter('medic')} className={categoryFilter === 'medic' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Medic</div>
+        <div onClick={() => setCategoryFilter('supporter')} className={categoryFilter === 'supporter' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Supporter</div>
+        <div onClick={() => setCategoryFilter('specialist')} className={categoryFilter === 'specialist' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Specialist</div>
+      </div>
+      <div className="flex flex-col">
+        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Operator
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Module
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Mission
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Checklist
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredData().map(module => (
+                    <tr key={module.id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <div className="flex-shrink-0 h-10 w-10 ">
+                            <div className="h-10 w-10 rounded-full bg-slate-300" />
+                          </div>
+                          <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">{module.operator}</div>
+                            <div className="text-sm text-gray-500">{module.subclass}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {module.module}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="text-sm text-gray-900">{module.mission1}</div>
+                        <div className="text-sm text-gray-900">{module.mission2}</div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div onClick={() => toggleTask(module.id, 'mission1Status')}>
+                          {module.mission1Status == 1 ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+                        </div>
+                        <div onClick={() => toggleTask(module.id, 'mission2Status')}>
+                          {module.mission2Status == 1 ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
