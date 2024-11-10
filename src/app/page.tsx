@@ -77,16 +77,16 @@ export default function App() {
   };
 
   return (
-    <>
+    <div className='bg-stone-900 min-h-screen'>
       {/* <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
         <p className="font-bold">Note</p>
         <p>Since this is a static site, if you want to retain your data, please do not delete the site's cache.</p>
       </div> */}
-      <div className="mb-3 xl:w-96">
+      <div className="mb-3 xl:w-96 bg-stone-900">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <input
             type="search"
-            className="relative mx-4 my-4 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+            className="relative mx-4 my-4 block flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-300 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-400 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
             placeholder="Search Operator Name"
             aria-label="Search"
             aria-describedby="button-addon2"
@@ -108,54 +108,54 @@ export default function App() {
           </span>
         </div>
       </div>
-      <div className="flex flex-wrap w-full gap-4 mx-4 mb-4">
-        <div onClick={() => setTodoFilter('to-do')} className={todoFilter === "to-do" ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>To Do</div>
-        <div onClick={() => setTodoFilter('all')} className={todoFilter === "all" ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>All</div>
+      <div className="flex flex-wrap w-full gap-4 mx-4 mb-4 bg-stone-900">
+        <div onClick={() => setTodoFilter('to-do')} className={todoFilter === "to-do" ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>To Do</div>
+        <div onClick={() => setTodoFilter('all')} className={todoFilter === "all" ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>All</div>
         <div className='border-r-2 border-r-blue-400'></div>
-        <div onClick={() => setCategoryFilter('all')} className={categoryFilter === 'all' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>All</div>
-        <div onClick={() => setCategoryFilter('vanguard')} className={categoryFilter === 'vanguard' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Vanguard</div>
-        <div onClick={() => setCategoryFilter('guard')} className={categoryFilter === 'guard' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Guard</div>
-        <div onClick={() => setCategoryFilter('defender')} className={categoryFilter === 'defender' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Defender</div>
-        <div onClick={() => setCategoryFilter('sniper')} className={categoryFilter === 'sniper' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Sniper</div>
-        <div onClick={() => setCategoryFilter('caster')} className={categoryFilter === 'caster' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Caster</div>
-        <div onClick={() => setCategoryFilter('medic')} className={categoryFilter === 'medic' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Medic</div>
-        <div onClick={() => setCategoryFilter('supporter')} className={categoryFilter === 'supporter' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Supporter</div>
-        <div onClick={() => setCategoryFilter('specialist')} className={categoryFilter === 'specialist' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" : "bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"}>Specialist</div>
+        <div onClick={() => setCategoryFilter('all')} className={categoryFilter === 'all' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>All</div>
+        <div onClick={() => setCategoryFilter('vanguard')} className={categoryFilter === 'vanguard' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Vanguard</div>
+        <div onClick={() => setCategoryFilter('guard')} className={categoryFilter === 'guard' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Guard</div>
+        <div onClick={() => setCategoryFilter('defender')} className={categoryFilter === 'defender' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Defender</div>
+        <div onClick={() => setCategoryFilter('sniper')} className={categoryFilter === 'sniper' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Sniper</div>
+        <div onClick={() => setCategoryFilter('caster')} className={categoryFilter === 'caster' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Caster</div>
+        <div onClick={() => setCategoryFilter('medic')} className={categoryFilter === 'medic' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Medic</div>
+        <div onClick={() => setCategoryFilter('supporter')} className={categoryFilter === 'supporter' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Supporter</div>
+        <div onClick={() => setCategoryFilter('specialist')} className={categoryFilter === 'specialist' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Specialist</div>
       </div>
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-stone-900">
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-bold text-amber-400 uppercase tracking-wider"
                     >
                       Operator
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-bold text-amber-400 uppercase tracking-wider"
                     >
                       Module
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-bold text-amber-400 uppercase tracking-wider"
                     >
                       Mission
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-xs font-bold text-amber-400 uppercase tracking-wider"
                     >
                       Checklist
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-stone-900 divide-y divide-gray-200">
                   {filteredData().map(module => (
                     <tr key={module.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -164,7 +164,7 @@ export default function App() {
                             <div className="h-10 w-10 rounded-full bg-slate-300" />
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{module.operator}</div>
+                            <div className="text-sm font-medium text-gray-200">{module.operator}</div>
                             <div className="text-sm text-gray-500">{module.subclass}</div>
                           </div>
                         </div>
@@ -173,15 +173,15 @@ export default function App() {
                         {module.module}
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900">{module.mission1}</div>
-                        <div className="text-sm text-gray-900">{module.mission2}</div>
+                        <div className="text-sm text-gray-400">{module.mission1}</div>
+                        <div className="text-sm text-gray-400">{module.mission2}</div>
                       </td>
                       <td className="px-6 py-4">
                         <div onClick={() => toggleTask(module.id, 'mission1Status')}>
-                          {module.mission1Status == 1 ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+                          {module.mission1Status == 1 ? <CheckBoxIcon className="fill-gray-400"/> : <CheckBoxOutlineBlankIcon className="fill-gray-400"/>}
                         </div>
                         <div onClick={() => toggleTask(module.id, 'mission2Status')}>
-                          {module.mission2Status == 1 ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+                          {module.mission2Status == 1 ? <CheckBoxIcon className="fill-gray-400"/> : <CheckBoxOutlineBlankIcon className="fill-gray-400"/>}
                         </div>
                       </td>
                     </tr>
@@ -192,6 +192,6 @@ export default function App() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
