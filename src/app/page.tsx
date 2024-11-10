@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import Button from '@mui/material/Button';
 import data from './Arknights Module Checklist.json';
 
 export default function App() {
