@@ -78,6 +78,10 @@ export default function App() {
 
   return (
     <>
+      {/* <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+        <p className="font-bold">Note</p>
+        <p>Since this is a static site, if you want to retain your data, please do not delete the site's cache.</p>
+      </div> */}
       <div className="mb-3 xl:w-96">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <input
