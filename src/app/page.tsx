@@ -76,13 +76,22 @@ export default function App() {
     return filtered;
   };
 
+  const exportData = () => {
+    const dataStr = JSON.stringify(moduleData, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'moduleData.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className='bg-stone-900 min-h-screen'>
-      {/* <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
-        <p className="font-bold">Note</p>
-        <p>Since this is a static site, if you want to retain your data, please do not delete the site's cache.</p>
-      </div> */}
       <div className="mb-3 xl:w-96 bg-stone-900">
+        {/* Search bar */}
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <input
             type="search"
@@ -92,36 +101,27 @@ export default function App() {
             aria-describedby="button-addon2"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <span
-            className="input-group-text flex items-center whitespace-nowrap rounded px-3 py-1.5 text-center text-base font-normal text-neutral-700 dark:text-neutral-200"
-            id="basic-addon2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5">
-              <path
-                fillRule="evenodd"
-                d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                clipRule="evenodd" />
-            </svg>
-          </span>
+        </div>
+
+        {/* Export button */}
+        <div className="mb-4">
+          <button
+            onClick={exportData}
+            className="bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded">
+            Export Data
+          </button>
         </div>
       </div>
+
+      {/* Filters and table*/}
       <div className="flex flex-wrap gap-4 mx-4 mb-4 bg-stone-900">
         <div onClick={() => setTodoFilter('to-do')} className={todoFilter === "to-do" ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>To Do</div>
         <div onClick={() => setTodoFilter('all')} className={todoFilter === "all" ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>All</div>
         <div className='border-r-2 border-r-blue-400'></div>
-        <div onClick={() => setCategoryFilter('all')} className={categoryFilter === 'all' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>All</div>
-        <div onClick={() => setCategoryFilter('vanguard')} className={categoryFilter === 'vanguard' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Vanguard</div>
-        <div onClick={() => setCategoryFilter('guard')} className={categoryFilter === 'guard' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Guard</div>
-        <div onClick={() => setCategoryFilter('defender')} className={categoryFilter === 'defender' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Defender</div>
-        <div onClick={() => setCategoryFilter('sniper')} className={categoryFilter === 'sniper' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Sniper</div>
-        <div onClick={() => setCategoryFilter('caster')} className={categoryFilter === 'caster' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Caster</div>
-        <div onClick={() => setCategoryFilter('medic')} className={categoryFilter === 'medic' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Medic</div>
-        <div onClick={() => setCategoryFilter('supporter')} className={categoryFilter === 'supporter' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Supporter</div>
-        <div onClick={() => setCategoryFilter('specialist')} className={categoryFilter === 'specialist' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>Specialist</div>
+        <div onClick={() => setCategoryFilter('all')} className={categoryFilter === 'all' ? "bg-sky-500 hover:bg-sky-600 text-neutral-100 font-bold py-2 px-4 rounded" : "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"}>All</div>        
       </div>
+
+      {/* Table rendering filtered data*/}
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -160,9 +160,6 @@ export default function App() {
                     <tr key={module.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10 ">
-                            <div className="h-10 w-10 rounded-full bg-slate-300" />
-                          </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-200">{module.operator}</div>
                             <div className="text-sm text-gray-500">{module.subclass}</div>
